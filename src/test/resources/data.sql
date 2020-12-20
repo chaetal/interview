@@ -1,3 +1,10 @@
-insert into candidate(id, name, status) values (1, 'dmitry', 'accepted');
-insert into candidate(id, name, status) values (2, 'tomas', 'accepted');
-insert into candidate(id, name, status) values (3, 'peter', null);
+insert into candidate(id, name, money) values (1, 'dmitry', 10);
+insert into candidate(id, name, money) values (2, 'tomas', 10);
+insert into candidate(id, name, money) values (3, 'peter', 10);
+insert into candidate(id, name, money) values (1, 'alex', 10);
+insert into candidate(id, name, money) values (2, 'martin', 10);
+insert into candidate(id, name, money) values (3, 'george', 10);
+insert into candidate(id, name, money) values (1, 'kirill', 10);
+insert into candidate(id, name, money) values (2, 'gennadii', 10);
+insert into candidate(id, name, money) values (3, 'yulia', 10);
+insert into candidate(id, name, money) values (1, 'andarey', 10);

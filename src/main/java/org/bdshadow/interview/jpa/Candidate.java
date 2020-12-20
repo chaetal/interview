@@ -22,8 +22,8 @@ public class Candidate {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "status")
-    private String status;
+    @Column(name = "money")
+    private Integer money;
 }
 
 
