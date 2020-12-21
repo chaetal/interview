@@ -18,5 +18,8 @@ class BracketsTest {
         assertFalse(brackets.isCorrect("((("));
         assertFalse(brackets.isCorrect(")"));
         assertFalse(brackets.isCorrect("(()()"));
+
+        assertFalse(brackets.isCorrect(")("));
+        assertFalse(brackets.isCorrect("())("));
     }
 }
