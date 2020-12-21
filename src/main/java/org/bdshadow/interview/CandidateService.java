@@ -7,31 +7,33 @@ import org.bdshadow.interview.jpa.CandidateRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @RequiredArgsConstructor
 public class CandidateService {
 
     private final CandidateRepository candidateRepository;
-    private final ThreadPoolExecutor tpe = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
+    private final ThreadPoolExecutor tpe = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
 
     @Getter
-    private AtomicInteger allMoney = new AtomicInteger(0);
+    private int allMoney = 0;
 
-    @Transactional
     public void countMoney() throws InterruptedException {
-        List<Candidate> candidateList = candidateRepository.findAll();
-        allMoney.set(0);
+        allMoney = 0;
 
-        for (int i = 0; i < candidateList.size(); i++) {
-            int a = i;
-            tpe.submit(() -> allMoney.addAndGet(candidateList.get(a).getMoney()));
+        for (int i = 1; i <= 50; i++) {
+            int id = i;
+            tpe.submit(() -> this.addCandidateMoney(id));
         }
         tpe.awaitTermination(2, TimeUnit.SECONDS);
+    }
+
+    @Transactional
+    public void addCandidateMoney(int id) {
+        Candidate candidate = candidateRepository.findById(id).get();
+        allMoney += candidate.getMoney();
     }
 }

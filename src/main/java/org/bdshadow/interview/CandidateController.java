@@ -14,6 +14,6 @@ public class CandidateController {
     @GetMapping("/count-money")
     public ResponseEntity<Integer> countMoney() throws InterruptedException {
         candidateService.countMoney();
-        return new ResponseEntity<>(candidateService.getAllMoney().get(), HttpStatus.OK);
+        return new ResponseEntity<>(candidateService.getAllMoney(), HttpStatus.OK);
     }
 }

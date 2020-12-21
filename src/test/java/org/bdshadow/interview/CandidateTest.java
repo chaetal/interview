@@ -20,15 +20,8 @@ class CandidateTest {
 
     @Test
     void testAllCandidates() {
-        ResponseEntity<Candidate[]> candidates = restTemplate.getForEntity("http://localhost:" + port + "/candidates",
-                Candidate[].class);
-        assertEquals(3, candidates.getBody().length);
-    }
-
-    @Test
-    void testNullStatusCandidates() {
-        ResponseEntity<Candidate[]> candidates = restTemplate.getForEntity("http://localhost:" + port + "/candidates-no-status",
-                Candidate[].class);
-        assertEquals(1, candidates.getBody().length);
+        ResponseEntity<Integer> money = restTemplate.getForEntity("http://localhost:" + port + "/count-money",
+                Integer.class);
+        assertEquals(500, money.getBody());
     }
 }
