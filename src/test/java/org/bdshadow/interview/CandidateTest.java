@@ -1,6 +1,5 @@
 package org.bdshadow.interview;
 
-import org.bdshadow.interview.jpa.Candidate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +21,6 @@ class CandidateTest {
     void testAllCandidates() {
         ResponseEntity<Integer> money = restTemplate.getForEntity("http://localhost:" + port + "/count-money",
                 Integer.class);
-        assertEquals(500, money.getBody());
+        assertEquals(1000, money.getBody());
     }
 }

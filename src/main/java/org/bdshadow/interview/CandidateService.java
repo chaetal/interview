@@ -1,39 +1,33 @@
 package org.bdshadow.interview;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bdshadow.interview.jpa.Candidate;
 import org.bdshadow.interview.jpa.CandidateRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.CompletableFuture;
 
-@Service
+/**
+ * PLEASE, DO NOT CHANGE THIS SERVICE
+ */
 @RequiredArgsConstructor
+@Service
 public class CandidateService {
-
     private final CandidateRepository candidateRepository;
-    private final ThreadPoolExecutor tpe = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
-
-    @Getter
-    private int allMoney = 0;
-
-    public void countMoney() throws InterruptedException {
-        allMoney = 0;
-
-        for (int i = 1; i <= 50; i++) {
-            int id = i;
-            tpe.submit(() -> this.addCandidateMoney(id));
-        }
-        tpe.awaitTermination(2, TimeUnit.SECONDS);
-    }
 
     @Transactional
-    public void addCandidateMoney(int id) {
-        Candidate candidate = candidateRepository.findById(id).get();
-        allMoney += candidate.getMoney();
+    public CompletableFuture<Integer> getMoney(Integer candidateId) {
+        return CompletableFuture.supplyAsync(() -> {
+            Candidate candidate = candidateRepository.findById(candidateId).get();
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return candidate.getMoney();
+        });
     }
 }

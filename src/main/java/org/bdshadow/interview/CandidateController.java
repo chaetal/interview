@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @RequiredArgsConstructor
 public class CandidateController {
-    private final CandidateService candidateService;
+    private final MoneyService moneyService;
 
     @GetMapping("/count-money")
-    public ResponseEntity<Integer> countMoney() throws InterruptedException {
-        candidateService.countMoney();
-        return new ResponseEntity<>(candidateService.getAllMoney(), HttpStatus.OK);
+    public ResponseEntity<Integer> countMoney() throws Exception {
+        return new ResponseEntity<>(moneyService.countMoney(), HttpStatus.OK);
     }
 }
