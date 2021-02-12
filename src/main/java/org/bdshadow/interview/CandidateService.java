@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.bdshadow.interview.jpa.Candidate;
 import org.bdshadow.interview.jpa.CandidateRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -15,19 +15,20 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class CandidateService {
     private final CandidateRepository candidateRepository;
+    private final TransactionTemplate transactionTemplate;
 
-    @Transactional
     public CompletableFuture<Integer> getMoney(Integer candidateId) {
-        return CompletableFuture.supplyAsync(() -> {
-            Candidate candidate = candidateRepository.findById(candidateId).get();
+        return CompletableFuture.supplyAsync(
+                () -> transactionTemplate.execute(status -> {
+                    Candidate candidate = candidateRepository.findById(candidateId).get();
 
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
-            return candidate.getMoney();
-        });
+                    return candidate.getMoney();
+                }));
     }
 }
